@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Application ReadMe</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-50 antialiased">
+<div class="px-6 py-4 lg:px-20 lg:py-20">
+    <nav class="flex flex-row text-blue-600 text-xl font-medium pb-10">
+        <a href="login.php" class="px-4">Login <small>page</small></a>
+        <a href="recover.php" class="px-4">Recover <small>page</small></a>
+    </nav>
+
+    <h3 class="text-3xl font-semibold mt-2">Application Documentation</h3>
+    <div class="border border-orange-200 px-4 py-2 bg-orange-100 rounded text-orange-900 inline-flex my-4">
+        <span class="font-semibold">lib/schema.sql</span>&nbsp; file contains the table schema and data required to run the application.
+    </div>
+
+    <div class="mt-4">
+        <h4 class="text-xl font-semibold">Database connectivity</h4>
+        <pre class="inline-flex">lib/db_config.php</pre> contains the database connectivity information.
+        <pre class="my-6 text-sm py-4">
+    define('DB_HOST', 'localhost'); // database host
+    define('DB_USER', 'homestead'); // database username
+    define('DB_PASS', 'secret'); // database password
+    define('DB_NAME', 'application'); // database name
+        </pre>
+
+    </div>
+
+    <div class="mt-4">
+        <h4 class="text-xl font-semibold">Database tables</h4>
+        <p>The application has two tables:</p>
+        <ol class="list-decimal ml-6 mt-2">
+            <li><pre class="inline-flex">applicants</pre> : This table holds all the information about applicant data. Each field on the form is
+                saved into this table except for the <pre class="inline-flex">image_url</pre> field which holds a
+                relative url to the uploaded image</li>
+            <li><pre class="inline-flex">unique_codes</pre> : This table holds all the unique codes used to login before applying. These unique
+                codes can only be used once for an application.</li>
+        </ol>
+
+        <pre class="mt-10 text-sm">
+            CREATE TABLE `applicants` (
+              `id` int(10) UNSIGNED NOT NULL,
+              `access_code` varchar(20) DEFAULT NULL,
+              `firstname` varchar(50) NOT NULL,
+              `lastname` varchar(50) NOT NULL,
+              `address` text,
+              `marital_status` varchar(20) NOT NULL,
+              `edu_background` varchar(40) NOT NULL,
+              `best_subjects` varchar(255) NOT NULL,
+              `religion` varchar(20) NOT NULL,
+              `state_of_origin` varchar(20) NOT NULL,
+              `date_of_birth` date DEFAULT NULL,
+              `image_url` varchar(255) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+        </pre>
+
+        <pre class="mt-10 text-sm">
+            CREATE TABLE `unique_codes` (
+              `id` int(11) NOT NULL,
+              `access_code` varchar(10) NOT NULL,
+              `used` tinyint(4) NOT NULL DEFAULT '0',
+              `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+        </pre>
+    </div>
+</div>
+</body>
+</html>
